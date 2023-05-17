@@ -1,0 +1,14 @@
+postoffice-core
+Phase 1
+    Postoffice is implemented as a traditional WAR file.
+
+Phase 2
+    Generate a Wildfly based image that runs the WAR file. [1]
+
+
+
+
+
+
+References
+[1] https://www.wildfly.org/news/2022/08/04/wildfly-maven-docker/
