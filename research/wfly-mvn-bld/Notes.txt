@@ -1,0 +1,37 @@
+Disclaimer, this module was developed May 17, 2023.  It references an article
+published Apr 8, 2022.  The referenced plugins and images may have changed
+since this usage.
+
+
+This module follows the directions in [1] section, "WildFly Provisioning Architecture"
+using org.wildfly.plugins:wildfly-maven-plugin:4.1.0.Final.
+
+    - created pom.xml.
+    - added wildfly-maven-plugin from listing in [1].
+    * The wildfly-maven-plugin currently does not provide a means to
+      pull in the dependency, postoffice-core-0.1.0-SNAPSHOT.war.
+      - Added org.apache.maven.plugins:maven-dependency-plugin for that task.
+        In addition, this task was defined to run during goal, package,
+        the same as wildfly-maven-plugin.  maven-dependency-plugin
+        is configured to copy the WAR file into wildfly's standalone/deployments
+        directory.  Lastly this plugin was used to change the name of the WAR
+        from postoffice-core-0.1.0-SNAPSHOT.war to PostOffice.war.
+    NOTE: wildfly-maven-plugin supports running wildfly-CLI scripts however
+          this may not be sufficient to provide the desired provisioning.
+          The user may need to use maven-dependency-plugin, maven-ant-plugin
+          or like plugins to provide the desired files to the server and/or
+          the final image.
+
+From a developer's perspective having the files to be put into the image on the
+local disk can be very helpful in validating and debugging its contents.
+
+   - Created the Dockerfile from listing in [1].
+   - Ran commands
+        docker build -t wfly-mvn-bld-app .
+        docker run -p 8080:8080 wfly-mvn-bld-app
+   - In a separate terminal window ran commnd.  Expected result returned.
+        curl http://localhost:8080/cloud/postoffice/ping
+   - Stopped running image.
+
+[1] https://www.wildfly.org/news/2022/08/04/wildfly-maven-docker/
+    section titled, "WildFly Provisioning Architecture"

@@ -1,0 +1,27 @@
+Disclaimer, this module was developed May 17, 2023.  It references an article
+published Apr 8, 2022.  The referenced plugins and images may have changed
+since this usage.
+
+
+This module follows the directions in [1] section, "WildFly Docker image"
+to generate an image.
+
+    - created pom.xml.
+    * The wildfly-maven-plugin currently does not provide a means to
+      pull in the dependency, postoffice-core-0.1.0-SNAPSHOT.war.
+    - Added org.apache.maven.plugins:maven-dependency-plugin to pull in
+      postoffice-core-0.1.0-SNAPSHOT.war.  maven-dependency-plugin
+      is configured to copy the WAR file into this modules target
+      directory.  Lastly this plugin was used to change the name of the WAR
+      from postoffice-core-0.1.0-SNAPSHOT.war to PostOffice.war.
+
+   - Created the Dockerfile from listing in [1].
+   - Ran commands
+        docker build -t wfly-docker-app .
+        docker run -p 8080:8080 wfly-docker-app
+   - In a separate terminal window ran commnd.  Expected result returned.
+        curl http://localhost:8080/cloud/postoffice/ping
+   - Stopped running image.
+
+[1] https://www.wildfly.org/news/2022/08/04/wildfly-maven-docker/
+    section titled, "WildFly Docker image"
