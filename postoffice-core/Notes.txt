@@ -5,6 +5,8 @@ Phase 1
 Phase 2
     Generate a Wildfly based image that runs the WAR file. [1]
 
+Phase 3
+    create 1 test case that communicates with the Docker image.
 
 
 

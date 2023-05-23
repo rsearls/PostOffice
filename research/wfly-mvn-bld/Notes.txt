@@ -29,9 +29,24 @@ local disk can be very helpful in validating and debugging its contents.
    - Ran commands
         docker build -t wfly-mvn-bld-app .
         docker run -p 8080:8080 wfly-mvn-bld-app
-   - In a separate terminal window ran commnd.  Expected result returned.
-        curl http://localhost:8080/cloud/postoffice/ping
-   - Stopped running image.
+   - In a separate terminal window curl can test the various functions.
+        * Check for running service.
+            curl http://localhost:8080/cloud/postoffice/ping
 
+        * Upload a file (examples)
+            curl  -X PUT -H "attachment: PostOffice.war" -F "attachment=@target/PostOffice.war" http://localhost:8080/cloud/postoffice/upload
+            curl  -X PUT -H "attachment: Notes.txt" -F "attachment=@Notes.txt" http://localhost:8080/cloud/postoffice/upload
+
+        * Print list of uploaded files
+            curl http://localhost:8080/cloud/postoffice/checkmail
+
+        * Delete uploaded files
+            curl -X DELETE http://localhost:8080/cloud/postoffice/delete/Notes.txt
+            curl -X DELETE http://localhost:8080/cloud/postoffice/delete/PostOffice.war
+
+   - Return to terminal running the docker image and stop the running image.
+
+
+References
 [1] https://www.wildfly.org/news/2022/08/04/wildfly-maven-docker/
     section titled, "WildFly Provisioning Architecture"

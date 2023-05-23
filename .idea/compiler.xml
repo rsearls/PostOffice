@@ -6,7 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="postoffice" />
+        <module name="proto-test" />
+        <module name="postoffice-core" />
       </profile>
     </annotationProcessing>
   </component>
