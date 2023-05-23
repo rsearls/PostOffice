@@ -46,6 +46,7 @@
 
     <modules>
         <module>postoffice-core</module>
+        <module>mock-arquillian</module>
         <module>proto-test</module>
     </modules>
 
