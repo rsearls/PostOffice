@@ -1,0 +1,60 @@
+Disclaimer, this module was developed May 17, 2023.  The referenced plugins
+and images may have changed since this usage.
+
+This module is a protoType using an existing arquillian configured test to
+run against a docker image.  The objective of this protoType is to show that
+minimal changes to the existed test framework is needed in order to test a
+webservice app against a docker image running wildfly.
+
+The arquillian components are disabled through the use of module, mock-arquillian,
+for example the method annotated with @Deployment is never called by the framework.
+Arquillian.class declared in annotation, @RunWith is a mocked version which is no
+longer tied to core arquillian code.
+
+Junit5's vintage-engine archive is used in running the test, however the test class
+itself retains its Junit4 definitions.
+
+The build process builds a docker image but the image needs to be run from a terminal
+window.
+
+   - Build the project (mvn clean install)
+   - Ran commands
+        (optional) the pom file handles building the docker image.
+            This cmd could be used to build the image in a terminal window.
+                docker build -t proto-test-app .
+        In a separate terminal window run this cmd.
+                docker run -p 8080:8080 proto-test-app
+   - In the project terminal window run the test with cmd,
+            mvn clean verify
+   - Return to terminal running the docker image and stop the running image.
+   - Clean up the test env.
+        - find the container and remove
+            docker container ls -a
+            docker container rm <CONTAINER ID>
+        - find the image and remove
+            docker image ls
+            docker image rm <IMAGE_NAME or IMAGE_ID>
+
+
+   The running service can be tested manually in a terminal window with
+   any of the following cmds.
+   - In a separate terminal window curl can test the various functions.
+        * Check for running service.
+            curl http://localhost:8080/cloud/postoffice/ping
+
+        * Upload a file (examples)
+            curl  -X PUT -H "attachment: PostOffice.war" -F "attachment=@target/PostOffice.war" http://localhost:8080/cloud/postoffice/upload
+            curl  -X PUT -H "attachment: Notes.txt" -F "attachment=@Notes.txt" http://localhost:8080/cloud/postoffice/upload
+
+        * Print list of uploaded files
+            curl http://localhost:8080/cloud/postoffice/checkmail
+
+        * Delete uploaded files
+            curl -X DELETE http://localhost:8080/cloud/postoffice/delete/Notes.txt
+            curl -X DELETE http://localhost:8080/cloud/postoffice/delete/PostOffice.war
+
+
+
+
+
+

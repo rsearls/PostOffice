@@ -16,6 +16,9 @@
         <version.jakarta.ws.rs>3.1.0</version.jakarta.ws.rs>
         <version.jakarta.servlet.servlet-api>6.0.0</version.jakarta.servlet.servlet-api>
         <version.resteasy>6.2.3.Final</version.resteasy>
+        <version.wildfly-maven-plugin>4.1.0.Final</version.wildfly-maven-plugin>
+        <version.maven-dependency-plugin>3.5.0</version.maven-dependency-plugin>
+        <version.spotify.dockerfile-maven-plugin>1.4.13</version.spotify.dockerfile-maven-plugin>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +44,31 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>${version.wildfly-maven-plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${version.maven-dependency-plugin}</version>
+                </plugin>
+
+                <!-- plugin archived 2019 but it's the one that works -->
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>${version.spotify.dockerfile-maven-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <dependencies>
     </dependencies>
 
@@ -50,4 +78,16 @@
         <module>proto-test</module>
     </modules>
 
+    <profiles>
+        <!-- build components to run the research modules -->
+        <profile>
+            <id>research</id>
+            <modules>
+                <module>postoffice-core</module>
+                <module>mock-arquillian</module>
+                <module>research/wfly-docker</module>
+                <module>research/wfly-mvn-bld</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

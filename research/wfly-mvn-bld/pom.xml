@@ -16,6 +16,8 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.image.name>wfly-mvn-bld-app</docker.image.name>
+        <war.file>PostOffice.war</war.file>
     </properties>
 
 
@@ -27,7 +29,6 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>4.1.0.Final</version>
                 <configuration>
                     <feature-packs>
                         <feature-pack>
@@ -46,7 +47,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>copy</id>
@@ -65,12 +65,28 @@
                             <type>war</type>
                             <overWrite>true</overWrite>
                             <outputDirectory>${project.build.directory}/server/standalone/deployments</outputDirectory>
-                            <destFileName>PostOffice.war</destFileName>
+                            <destFileName>${war.file}</destFileName>
                         </artifactItem>
                     </artifactItems>
                     <outputDirectory>${project.build.directory}/server/standalone/deployments</outputDirectory>
                     <overWriteReleases>true</overWriteReleases>
                     <overWriteSnapshots>true</overWriteSnapshots>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>${docker.image.name}</repository>
                 </configuration>
             </plugin>
         </plugins>

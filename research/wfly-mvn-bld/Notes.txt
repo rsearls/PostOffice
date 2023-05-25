@@ -21,13 +21,18 @@ using org.wildfly.plugins:wildfly-maven-plugin:4.1.0.Final.
           The user may need to use maven-dependency-plugin, maven-ant-plugin
           or like plugins to provide the desired files to the server and/or
           the final image.
+   - Added com.spotify:dockerfile-maven-plugin to build the docker image,
+        wfly-mvn-bld-app.
 
 From a developer's perspective having the files to be put into the image on the
 local disk can be very helpful in validating and debugging its contents.
 
    - Created the Dockerfile from listing in [1].
+   - Build the project (mvn clean install)
    - Ran commands
-        docker build -t wfly-mvn-bld-app .
+        (optional) the pom file now handles building the docker image.
+            This cmd could be used to build the image however.
+                    docker build -t wfly-mvn-bld-app .
         docker run -p 8080:8080 wfly-mvn-bld-app
    - In a separate terminal window curl can test the various functions.
         * Check for running service.

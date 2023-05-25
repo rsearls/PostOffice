@@ -14,10 +14,15 @@ to generate an image.
       is configured to copy the WAR file into this modules target
       directory.  Lastly this plugin was used to change the name of the WAR
       from postoffice-core-0.1.0-SNAPSHOT.war to PostOffice.war.
+    - Added com.spotify:dockerfile-maven-plugin to build the docker image,
+      wfly-docker-app.
 
    - Created the Dockerfile from listing in [1].
+   - Build the project (mvn clean install)
    - Ran commands
-        docker build -t wfly-docker-app .
+        (optional) the pom file now handles building the docker image.
+            This cmd could be used to build the image however.
+                docker build -t wfly-docker-app .
         docker run -p 8080:8080 wfly-docker-app
    - In a separate terminal window curl can test the various functions.
         * Check for running service.
@@ -39,3 +44,4 @@ to generate an image.
 References
 [1] https://www.wildfly.org/news/2022/08/04/wildfly-maven-docker/
     section titled, "WildFly Docker image"
+[2] https://github.com/spotify/dockerfile-maven
